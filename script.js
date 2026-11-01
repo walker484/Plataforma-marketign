@@ -1,21 +1,18 @@
 
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getAuth,
   signInWithEmailAndPassword
-} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
   getFirestore,
   collection,
   getCountFromServer
-} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// FIREBASE
+// CONFIGURAÇÃO FIREBASE
 const firebaseConfig = {
   apiKey: "AIzaSyDsZUHfZ7EBatnMwwR4FKgPWLjZybIm9KI",
   authDomain: "walker-midia.firebaseapp.com",
@@ -26,75 +23,64 @@ const firebaseConfig = {
   appId: "1:223143706690:web:3c9e81a0d21173a59caddb"
 };
 
-// ADMINISTRADOR
-const ADMIN_UID = "7TAC1PMMwAMyrL3LUcboCHKjWJq2";
-
-// INICIALIZAÇÃO
+// INICIAR FIREBASE
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// ELEMENTOS
-const form = document.getElementById("form-login");
-const campoEmail = document.getElementById("email");
-const campoSenha = document.getElementById("senha");
-const botao = document.getElementById("btn-entrar");
-const erro = document.getElementById("erro");
+// UID DO ADMINISTRADOR
+const ADMIN_UID = "7TAC1PMMwAMyrL3LUcboCHKjWJq2";
 
 // LOGIN
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+const formulario = document.getElementById("formLogin");
 
-  erro.textContent = "";
-  erro.classList.remove("visivel");
+if (formulario) {
+  formulario.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  botao.disabled = true;
-  botao.textContent = "Verificando...";
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
+    const mensagem = document.getElementById("mensagem");
 
-  try {
-    const credencial = await signInWithEmailAndPassword(
-      auth,
-      campoEmail.value.trim(),
-      campoSenha.value
-    );
+    try {
+      mensagem.textContent = "Entrando...";
 
-    const usuario = credencial.user;
+      const resultado = await signInWithEmailAndPassword(
+        auth,
+        email,
+        senha
+      );
 
-    if (usuario.uid === ADMIN_UID) {
-      window.location.href = "./admin.html";
-    } else {
-      window.location.href = "./cliente.html";
+      if (resultado.user.uid === ADMIN_UID) {
+        window.location.href = "./admin.html";
+      } else {
+        window.location.href = "./cliente.html";
+      }
+
+    } catch (erro) {
+      console.error(erro);
+      mensagem.textContent = "E-mail ou senha incorretos.";
     }
-
-  } catch (error) {
-    console.error(error);
-
-    erro.textContent =
-      "Não foi possível entrar. Confira seu e-mail e senha.";
-
-    erro.classList.add("visivel");
-
-    botao.disabled = false;
-    botao.textContent = "Entrar";
-  }
-});
+  });
+}
 
 // CONTADOR DE USUÁRIOS
-async function carregarContador() {
-  const numero = document.getElementById("total-usuarios");
+async function atualizarContador() {
+  const elemento = document.getElementById("contadorUsuarios");
+
+  if (!elemento) return;
 
   try {
     const resultado = await getCountFromServer(
       collection(db, "usuarios")
     );
 
-    numero.textContent =
-      resultado.data().count.toLocaleString("pt-BR");
+    elemento.textContent = resultado.data().count;
 
-  } catch (error) {
-    console.error("Erro ao carregar usuários:", error);
-    numero.textContent = "—";
+  } catch (erro) {
+    console.error("Erro no contador:", erro);
+    elemento.textContent = "—";
   }
 }
 
-carregarContador();
+atualizarContador();
