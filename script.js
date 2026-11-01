@@ -35,7 +35,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const rtdb = getDatabase(app);
 
-// ADMINISTRADOR
+// UID DO ADMINISTRADOR
 const ADMIN_UID = "7TAC1PMMwAMyrL3LUcboCHKjWJq2";
 
 // STATUS REALTIME DATABASE
@@ -67,8 +67,10 @@ const campoSenha = document.getElementById("senha");
 const mensagem = document.getElementById("erro");
 const botaoEntrar = document.getElementById("btn-entrar");
 
+// MOSTRAR MENSAGEM
 function mostrarMensagem(texto) {
   if (!mensagem) return;
+
   mensagem.textContent = texto;
   mensagem.classList.add("visivel");
 }
@@ -78,7 +80,9 @@ if (formulario) {
   formulario.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    mensagem.classList.remove("visivel");
+    if (mensagem) {
+      mensagem.classList.remove("visivel");
+    }
 
     const email = campoEmail.value.trim();
     const senha = campoSenha.value;
@@ -93,11 +97,19 @@ if (formulario) {
         senha
       );
 
-      if (resultado.user.uid === ADMIN_UID) {
-        window.location.href = "./admin.html";
-      } else {
-        window.location.href = "./cliente.html";
-      }
+      // CONFIRMAR PERFIL
+      const ehAdmin = resultado.user.uid === ADMIN_UID;
+
+      // GUARDAR PERFIL PARA A PRÓXIMA PÁGINA
+      sessionStorage.setItem(
+        "perfilDaviWalker",
+        ehAdmin ? "admin" : "cliente"
+      );
+
+      sessionStorage.setItem("loginBemVindo", "sim");
+
+      // ADMIN E CLIENTE VÃO PARA A PÁGINA DE ENTRADA
+      window.location.href = "./entrada.html";
 
     } catch (erro) {
       console.error("Erro no login:", erro);
@@ -108,8 +120,13 @@ if (formulario) {
         erro.code === "auth/user-not-found"
       ) {
         mostrarMensagem("E-mail ou senha incorretos.");
+
       } else if (erro.code === "auth/too-many-requests") {
         mostrarMensagem("Muitas tentativas. Aguarde um pouco.");
+
+      } else if (erro.code === "auth/network-request-failed") {
+        mostrarMensagem("Verifique sua conexão com a internet.");
+
       } else {
         mostrarMensagem("Não foi possível entrar. Tente novamente.");
       }
@@ -120,7 +137,7 @@ if (formulario) {
   });
 }
 
-// CONTADOR
+// CONTADOR DE USUÁRIOS
 async function atualizarContador() {
   const elemento = document.getElementById("total-usuarios");
 
