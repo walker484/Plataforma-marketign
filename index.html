@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Davi Walker | Acesso</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<main class="pagina">
+
+  <header class="marca">
+    <h1>DAVI WALKER</h1>
+    <p>Marketing Digital</p>
+  </header>
+
+  <section class="cartao">
+    <h2>Acesse sua conta</h2>
+    <p class="subtitulo">Entre para continuar na plataforma.</p>
+
+    <div id="erro" class="erro" role="alert"></div>
+
+    <form id="form-login">
+
+      <div class="campo">
+        <label for="email">E-mail</label>
+        <input id="email" type="email"
+          placeholder="Digite seu e-mail"
+          autocomplete="username" required>
+      </div>
+
+      <div class="campo">
+        <label for="senha">Senha</label>
+        <input id="senha" type="password"
+          placeholder="Digite sua senha"
+          autocomplete="current-password" required>
+      </div>
+
+      <button id="btn-entrar" class="botao" type="submit">
+        Entrar
+      </button>
+
+    </form>
+  </section>
+
+  <section class="contador">
+    <div id="total-usuarios" class="contador-numero">—</div>
+    <div class="contador-texto">
+      Pessoas usando<br>a plataforma
+    </div>
+  </section>
+
+  <p class="rodape">Acesso seguro • Davi Walker</p>
+
+</main>
+
+<script type="module" src="script.js"></script>
+
+</body>
+</html>
