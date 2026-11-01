@@ -28,22 +28,45 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// UID DO ADMINISTRADOR
+// ADMINISTRADOR
 const ADMIN_UID = "7TAC1PMMwAMyrL3LUcboCHKjWJq2";
 
-// LOGIN
-const formulario = document.getElementById("formLogin");
+// ELEMENTOS DO LOGIN
+const formulario = document.getElementById("form-login");
+const campoEmail = document.getElementById("email");
+const campoSenha = document.getElementById("senha");
+const mensagem = document.getElementById("erro");
+const botaoEntrar = document.getElementById("btn-entrar");
 
+// MOSTRAR ERRO
+function mostrarMensagem(texto) {
+  if (!mensagem) return;
+
+  mensagem.textContent = texto;
+  mensagem.classList.add("visivel");
+}
+
+// LOGIN
 if (formulario) {
+
   formulario.addEventListener("submit", async (event) => {
+
     event.preventDefault();
 
-    const email = document.getElementById("email").value.trim();
-    const senha = document.getElementById("senha").value;
-    const mensagem = document.getElementById("mensagem");
+    mensagem.classList.remove("visivel");
+
+    const email = campoEmail.value.trim();
+    const senha = campoSenha.value;
+
+    if (!email || !senha) {
+      mostrarMensagem("Preencha seu e-mail e sua senha.");
+      return;
+    }
 
     try {
-      mensagem.textContent = "Entrando...";
+
+      botaoEntrar.disabled = true;
+      botaoEntrar.textContent = "Entrando...";
 
       const resultado = await signInWithEmailAndPassword(
         auth,
@@ -51,26 +74,54 @@ if (formulario) {
         senha
       );
 
+      // ADMINISTRADOR
       if (resultado.user.uid === ADMIN_UID) {
+
         window.location.href = "./admin.html";
+
       } else {
+
+        // CLIENTE
         window.location.href = "./cliente.html";
+
       }
 
     } catch (erro) {
-      console.error(erro);
-      mensagem.textContent = "E-mail ou senha incorretos.";
+
+      console.error("Erro no login:", erro);
+
+      if (
+        erro.code === "auth/invalid-credential" ||
+        erro.code === "auth/wrong-password" ||
+        erro.code === "auth/user-not-found"
+      ) {
+        mostrarMensagem("E-mail ou senha incorretos.");
+
+      } else if (erro.code === "auth/too-many-requests") {
+        mostrarMensagem("Muitas tentativas. Aguarde um pouco.");
+
+      } else {
+        mostrarMensagem("Não foi possível entrar. Tente novamente.");
+      }
+
+      botaoEntrar.disabled = false;
+      botaoEntrar.textContent = "Entrar";
+
     }
+
   });
+
 }
 
 // CONTADOR DE USUÁRIOS
 async function atualizarContador() {
-  const elemento = document.getElementById("contadorUsuarios");
+
+  const elemento = document.getElementById("total-usuarios");
 
   if (!elemento) return;
 
   try {
+
     const resultado = await getCountFromServer(
       collection(db, "usuarios")
     );
@@ -78,9 +129,13 @@ async function atualizarContador() {
     elemento.textContent = resultado.data().count;
 
   } catch (erro) {
+
     console.error("Erro no contador:", erro);
+
     elemento.textContent = "—";
+
   }
+
 }
 
 atualizarContador();
