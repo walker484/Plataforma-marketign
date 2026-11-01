@@ -11,10 +11,6 @@
   --borda: #dbe4f0;
 }
 
-html {
-  min-height: 100%;
-}
-
 body {
   margin: 0;
   min-height: 100vh;
@@ -50,6 +46,34 @@ body {
   font-size: 11px;
   letter-spacing: 2.5px;
   text-transform: uppercase;
+}
+
+.status-firebase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 18px;
+  color: var(--cinza);
+  font-size: 12px;
+}
+
+.bolinha-firebase {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f59e0b;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.bolinha-firebase.conectado {
+  background: #16a34a;
+  box-shadow: 0 0 0 4px rgba(22,163,74,.12);
+}
+
+.bolinha-firebase.desconectado {
+  background: #dc2626;
 }
 
 .cartao {
@@ -103,17 +127,16 @@ body {
   color: var(--texto);
   font-size: 16px;
   outline: none;
-  transition: border-color .2s, box-shadow .2s;
-}
-
-.campo input::placeholder {
-  color: #94a3b8;
 }
 
 .campo input:focus {
   border-color: var(--azul);
   box-shadow: 0 0 0 3px rgba(23,78,166,.10);
   background: #fff;
+}
+
+.campo input::placeholder {
+  color: #94a3b8;
 }
 
 .senha-container {
@@ -171,10 +194,6 @@ body {
 
 .botao:hover {
   background: var(--azul-hover);
-}
-
-.botao:active {
-  opacity: .9;
 }
 
 .botao:disabled {
