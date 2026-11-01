@@ -6,6 +6,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Davi Walker | Acesso</title>
 <link rel="stylesheet" href="style.css">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.pagina {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 16px;
+}
+
+.marca {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.marca h1 {
+  margin-bottom: 5px;
+}
+
+.cartao {
+  width: 100%;
+  max-width: 420px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.campo input {
+  width: 100%;
+  min-height: 48px;
+  padding: 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.senha-container {
+  position: relative;
+  width: 100%;
+}
+
+.senha-container input {
+  padding-right: 52px;
+}
+
+.olho {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 19px;
+}
+
+.botao {
+  width: 100%;
+  cursor: pointer;
+}
+
+.erro:empty {
+  display: none;
+}
+
+.contador {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.rodape {
+  text-align: center;
+  margin-top: 25px;
+}
+</style>
 </head>
 
 <body>
@@ -18,8 +109,12 @@
   </header>
 
   <section class="cartao">
+
     <h2>Acesse sua conta</h2>
-    <p class="subtitulo">Entre para continuar na plataforma.</p>
+
+    <p class="subtitulo">
+      Entre para continuar na plataforma.
+    </p>
 
     <div id="erro" class="erro" role="alert"></div>
 
@@ -27,35 +122,95 @@
 
       <div class="campo">
         <label for="email">E-mail</label>
-        <input id="email" type="email"
+
+        <input
+          id="email"
+          type="email"
           placeholder="Digite seu e-mail"
-          autocomplete="username" required>
+          autocomplete="username"
+          required
+        >
       </div>
 
       <div class="campo">
+
         <label for="senha">Senha</label>
-        <input id="senha" type="password"
-          placeholder="Digite sua senha"
-          autocomplete="current-password" required>
+
+        <div class="senha-container">
+
+          <input
+            id="senha"
+            type="password"
+            placeholder="Digite sua senha"
+            autocomplete="current-password"
+            required
+          >
+
+          <button
+            type="button"
+            id="mostrar-senha"
+            class="olho"
+            aria-label="Mostrar senha"
+            aria-pressed="false"
+          >👁️</button>
+
+        </div>
+
       </div>
 
-      <button id="btn-entrar" class="botao" type="submit">
+      <button
+        id="btn-entrar"
+        class="botao"
+        type="submit"
+      >
         Entrar
       </button>
 
     </form>
+
   </section>
 
   <section class="contador">
-    <div id="total-usuarios" class="contador-numero">—</div>
-    <div class="contador-texto">
-      Pessoas usando<br>a plataforma
+
+    <div id="total-usuarios" class="contador-numero">
+      —
     </div>
+
+    <div class="contador-texto">
+      Pessoas usando<br>
+      a plataforma
+    </div>
+
   </section>
 
-  <p class="rodape">Acesso seguro • Davi Walker</p>
+  <p class="rodape">
+    Acesso seguro • Davi Walker
+  </p>
 
 </main>
+
+<script>
+const botaoOlho = document.getElementById("mostrar-senha");
+
+botaoOlho.addEventListener("click", function () {
+
+  const campoSenha = document.getElementById("senha");
+
+  const mostrar = campoSenha.type === "password";
+
+  campoSenha.type = mostrar ? "text" : "password";
+
+  botaoOlho.textContent = mostrar ? "🙈" : "👁️";
+
+  botaoOlho.setAttribute("aria-pressed", String(mostrar));
+
+  botaoOlho.setAttribute(
+    "aria-label",
+    mostrar ? "Esconder senha" : "Mostrar senha"
+  );
+
+});
+</script>
 
 <script type="module" src="script.js"></script>
 
