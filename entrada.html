@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DAVI WALKER | Administração</title>
+<title>DAVI WALKER | Entrada</title>
 
 <style>
 * {
@@ -13,227 +13,98 @@
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #ffffff;
-  color: #174ea6;
-}
-
-header {
-  background: #ffffff;
-  border-bottom: 2px solid #dce9ff;
-  padding: 20px;
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
+  justify-content: center;
+  background: #ffffff;
+  font-family: Arial, sans-serif;
+  color: #174ea6;
+  padding: 20px;
 }
 
-header h1 {
+.painel {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  padding: 35px 25px;
+  border: 1px solid #dce9ff;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px #174ea615;
+}
+
+h1 {
   margin: 0;
-  font-size: 23px;
+  font-size: 26px;
 }
 
-header p {
-  margin: 5px 0 0;
+h2 {
+  margin-top: 28px;
+  font-size: 21px;
+}
+
+p {
   color: #6681aa;
+  line-height: 1.6;
+}
+
+.carregando {
+  margin: 25px 0;
+  font-size: 15px;
+}
+
+.erro {
+  display: none;
+  margin-top: 20px;
+  color: #b42318;
+  background: #fff1f0;
+  padding: 12px;
+  border-radius: 8px;
 }
 
 button {
-  cursor: pointer;
-  border: 0;
-  border-radius: 8px;
-  padding: 11px 16px;
+  margin-top: 15px;
+  padding: 12px 20px;
   background: #174ea6;
   color: white;
+  border: none;
+  border-radius: 8px;
   font-weight: bold;
-}
-
-main {
-  max-width: 1200px;
-  margin: auto;
-  padding: 22px;
-}
-
-.boas-vindas {
-  margin-bottom: 25px;
-}
-
-.boas-vindas h2 {
-  margin-bottom: 7px;
-}
-
-.boas-vindas p {
-  color: #6681aa;
-}
-
-.grade-servicos {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.servico {
-  background: white;
-  border: 1px solid #dce9ff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 3px 12px #174ea615;
-  text-align: left;
-}
-
-.servico img {
-  width: 100%;
-  height: 155px;
-  object-fit: cover;
-  display: block;
-}
-
-.servico h3 {
-  font-size: 15px;
-  padding: 12px;
-  margin: 0;
-  min-height: 55px;
-  color: #174ea6;
-}
-
-#carregando {
-  padding: 30px;
-  text-align: center;
-}
-
-#area-admin {
-  display: none;
-}
-
-@media(max-width: 700px) {
-  .grade-servicos {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-
-  main {
-    padding: 15px;
-  }
-
-  .servico img {
-    height: 125px;
-  }
-
-  .servico h3 {
-    font-size: 13px;
-  }
-}
-
-@media(max-width: 350px) {
-  .grade-servicos {
-    grid-template-columns: 1fr;
-  }
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div id="carregando">
-  Verificando acesso administrativo...
-</div>
+<section class="painel">
 
-<div id="area-admin">
+  <h1>DAVI WALKER</h1>
+  <p>Marketing Digital</p>
 
-<header>
-  <div>
-    <h1>DAVI WALKER</h1>
-    <p>Marketing Digital | Painel Administrativo</p>
+  <h2>Bem-vindo à plataforma!</h2>
+
+  <div class="carregando" id="carregando">
+    Identificando seu perfil...
   </div>
 
-  <button onclick="sair()">Sair</button>
-</header>
+  <div class="erro" id="erro">
+    Não foi possível identificar seu acesso.
+    Entre novamente pela página de login.
+    <br>
+    <button onclick="voltarLogin()">Voltar ao login</button>
+  </div>
 
-<main>
-
-  <section class="boas-vindas">
-    <h2>Bem-vindo, Davi!</h2>
-    <p>Escolha um serviço para acessar sua área administrativa.</p>
-  </section>
-
-  <h2>Meus serviços</h2>
-
-  <section class="grade-servicos">
-
-    <article class="servico">
-      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600" alt="SEO">
-      <h3>1. SEO — Aparecer no Google</h3>
-    </article>
-
-    <article class="servico">
-      <img src="https://images.unsplash.com/photo-1557838923-2985c318be48?w=600" alt="Tráfego pago">
-      <h3>2. Tráfego Pago — Anúncios</h3>
-    </article>
-
-    <article class="servico">
-      <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600" alt="Marketing de conteúdo">
-      <h3>3. Marketing de Conteúdo — Textos</h3>
-    </article>
-
-    <article class="servico">
-      <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600" alt="Redes sociais">
-      <h3>4. Redes Sociais — Publicações</h3>
-    </article>
-
-    <article class="servico">
-      <img src="https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=600" alt="E-mail marketing">
-      <h3>5. E-mail Marketing — Mensagens</h3>
-    </article>
-
-    <article class="servico">
-      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600" alt="Métricas">
-      <h3>6. Métricas — Resultados</h3>
-    </article>
-
-    <article class="servico">
-      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600" alt="Fotografia">
-      <h3>7. Fotografia e Divulgação de Produtos</h3>
-    </article>
-
-    <article class="servico">
-      <img src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=600" alt="Vídeos">
-      <h3>8. Vídeos Publicitários</h3>
-    </article>
-
-    <article class="servico">
-      <img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=600" alt="Catálogo e loja virtual">
-      <h3>9. Catálogo e Loja Virtual</h3>
-    </article>
-
-    <article class="servico">
-      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600" alt="Marketing local">
-      <h3>10. Marketing Local — Clientes da Região</h3>
-    </article>
-
-    <article class="servico">
-      <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600" alt="Planejamento">
-      <h3>11. Planejamento de Campanhas</h3>
-    </article>
-
-    <article class="servico">
-      <img src="https://images.unsplash.com/photo-1634942536790-253f5f5e7e6b?w=600" alt="Identidade visual">
-      <h3>12. Identidade Visual e Marca</h3>
-    </article>
-
-  </section>
-
-</main>
-</div>
+</section>
 
 <script type="module">
+
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getAuth,
-  onAuthStateChanged,
-  signOut
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
@@ -251,23 +122,49 @@ const ADMIN_UID = "7TAC1PMMwAMyrL3LUcboCHKjWJq2";
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-onAuthStateChanged(auth, usuario => {
-  document.getElementById("carregando").style.display = "none";
+const carregando = document.getElementById("carregando");
+const erro = document.getElementById("erro");
 
-  if (!usuario || usuario.uid !== ADMIN_UID) {
-    window.location.href = "entrada.html";
+onAuthStateChanged(auth, usuario => {
+
+  if (!usuario) {
+    window.location.replace("./index.html");
     return;
   }
 
-  document.getElementById("area-admin").style.display = "block";
+  const perfilSalvo = sessionStorage.getItem("perfilDaviWalker");
+
+  // CONFIRMAR ADMINISTRADOR PELO UID
+  if (usuario.uid === ADMIN_UID) {
+
+    sessionStorage.setItem("perfilDaviWalker", "admin");
+
+    carregando.textContent = "Abrindo painel administrativo...";
+
+    window.location.replace("./admin.html");
+    return;
+  }
+
+  // CLIENTE
+  if (perfilSalvo === "cliente") {
+
+    carregando.textContent = "Abrindo área do cliente...";
+
+    window.location.replace("./cliente.html");
+    return;
+  }
+
+  // PERFIL NÃO IDENTIFICADO
+  carregando.style.display = "none";
+  erro.style.display = "block";
+
 });
 
-window.sair = async function() {
-  await signOut(auth);
-  window.location.href = "entrada.html";
+window.voltarLogin = function() {
+  window.location.href = "./index.html";
 };
+
 </script>
 
 </body>
 </html>
-
